@@ -3,7 +3,7 @@ create extension if not exists "uuid-ossp";
 
 -- Profiles (extends Supabase auth.users)
 create table profiles (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users(id) on delete cascade unique not null,
   full_name text,
   email text not null,
@@ -15,7 +15,7 @@ create table profiles (
 
 -- Organizations
 create table organizations (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   owner_id uuid references profiles(id) on delete cascade not null,
   name text not null,
   plan text not null default 'free',
@@ -26,7 +26,7 @@ create table organizations (
 
 -- Locations (business locations)
 create table locations (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   org_id uuid references organizations(id) on delete cascade not null,
   name text not null,
   address text,
@@ -40,7 +40,7 @@ create table locations (
 
 -- Contacts (customers of the business)
 create table contacts (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   org_id uuid references organizations(id) on delete cascade not null,
   name text not null,
   phone text,
@@ -50,10 +50,10 @@ create table contacts (
 
 -- Review requests (SMS sent to customers)
 create table review_requests (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   location_id uuid references locations(id) on delete cascade not null,
   contact_id uuid references contacts(id) on delete set null,
-  token text unique not null default uuid_generate_v4()::text,
+  token text unique not null default gen_random_uuid()::text,
   sent_at timestamptz,
   opened_at timestamptz,
   rating_given integer,
@@ -65,7 +65,7 @@ create table review_requests (
 
 -- Reviews (fetched from Google)
 create table reviews (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   location_id uuid references locations(id) on delete cascade not null,
   google_review_id text unique,
   author_name text not null,
@@ -82,7 +82,7 @@ create table reviews (
 
 -- Campaigns (SMS automation rules)
 create table campaigns (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   location_id uuid references locations(id) on delete cascade not null,
   name text not null,
   trigger_type text not null default 'manual',
@@ -95,7 +95,7 @@ create table campaigns (
 
 -- SMS logs
 create table sms_logs (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   org_id uuid references organizations(id) on delete cascade not null,
   location_id uuid references locations(id) on delete set null,
   to_phone text not null,
@@ -107,7 +107,7 @@ create table sms_logs (
 
 -- Webhook events (idempotency)
 create table webhook_events (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   source text not null,
   event_id text not null,
   processed_at timestamptz default now(),
