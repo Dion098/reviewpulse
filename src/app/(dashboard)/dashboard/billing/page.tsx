@@ -113,10 +113,16 @@ async function BillingContent() {
     redirect("/login");
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("user_id", user.id)
+    .single();
+
   const { data: org } = await supabase
     .from("organizations")
     .select("*")
-    .eq("owner_id", user.id)
+    .eq("owner_id", profile?.id ?? "")
     .single();
 
   const currentPlan = (org?.plan ?? "free") as Plan;

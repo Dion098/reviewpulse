@@ -43,10 +43,17 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const [profileResult, orgResult] = await Promise.all([
-    supabase.from("profiles").select("*").eq("user_id", user.id).single(),
-    supabase.from("organizations").select("*").eq("owner_id", user.id).single(),
-  ]);
+  const profileResult = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("user_id", user.id)
+    .single();
+
+  const orgResult = await supabase
+    .from("organizations")
+    .select("*")
+    .eq("owner_id", profileResult.data?.id ?? "")
+    .single();
 
   const profile = profileResult.data;
   const organization = orgResult.data;
