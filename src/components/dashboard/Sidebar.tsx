@@ -67,12 +67,11 @@ export function Sidebar({ currentPath, user }: SidebarProps) {
     .slice(0, 2);
 
   return (
-    <aside className="flex h-full w-60 shrink-0 flex-col bg-slate-950">
+    <aside className="flex h-full w-60 shrink-0 flex-col bg-slate-950 border-r border-white/5">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 px-5">
-        {/* Gradient star icon */}
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-400 to-violet-400">
-          <Star className="h-4 w-4 text-white" fill="white" />
+      <div className="flex h-14 items-center gap-2.5 px-5 border-b border-white/5">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-indigo-500">
+          <Star className="h-3.5 w-3.5 text-white" fill="white" />
         </div>
         <span className="text-sm font-semibold text-white tracking-tight">
           ReviewPulse
@@ -80,11 +79,10 @@ export function Sidebar({ currentPath, user }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-5">
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {navGroups.map((group) => (
           <div key={group.label}>
-            {/* Section label */}
-            <p className="mb-1.5 px-3 text-xs font-medium uppercase tracking-widest text-slate-600">
+            <p className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-widest text-slate-600">
               {group.label}
             </p>
             <ul className="space-y-0.5">
@@ -101,13 +99,18 @@ export function Sidebar({ currentPath, user }: SidebarProps) {
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
                       className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150",
+                        "flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-100",
                         isActive
-                          ? "border-l-2 border-indigo-400 bg-indigo-500/20 pl-[10px] text-indigo-300"
-                          : "text-slate-400 hover:bg-white/5 hover:text-white"
+                          ? "bg-white/10 text-white"
+                          : "text-slate-500 hover:bg-white/5 hover:text-slate-300"
                       )}
                     >
-                      <Icon className="h-5 w-5 shrink-0" />
+                      <Icon
+                        className={cn(
+                          "h-4 w-4 shrink-0",
+                          isActive ? "text-indigo-400" : "text-slate-600"
+                        )}
+                      />
                       {item.label}
                     </Link>
                   </li>
@@ -119,26 +122,23 @@ export function Sidebar({ currentPath, user }: SidebarProps) {
       </nav>
 
       {/* User section */}
-      <div className="border-t border-white/10 px-3 py-3">
-        <div className="flex items-center gap-3 px-2 py-2">
-          {/* Avatar */}
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 text-xs font-semibold text-white">
+      <div className="border-t border-white/5 px-3 py-3">
+        <div className="flex items-center gap-2.5 rounded-md px-2 py-2">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/20 text-[10px] font-bold text-indigo-300">
             {initials}
           </div>
-          {/* Name + email */}
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-white">
+            <p className="truncate text-xs font-semibold text-slate-300">
               {user.name}
             </p>
-            <p className="truncate text-xs text-slate-500">{user.email}</p>
+            <p className="truncate text-[10px] text-slate-600">{user.email}</p>
           </div>
-          {/* Logout */}
           <Link
             href="/auth/logout"
             title="Log out"
-            className="shrink-0 text-slate-500 transition-colors duration-150 hover:text-white"
+            className="shrink-0 text-slate-600 transition-colors hover:text-slate-300"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-3.5 w-3.5" />
             <span className="sr-only">Log out</span>
           </Link>
         </div>

@@ -193,10 +193,10 @@ export default async function DashboardPage() {
       {/* Greeting header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-          {getGreeting()}, {firstName} 👋
+          {getGreeting()}, {firstName}
         </h1>
         <p className="text-slate-500 text-sm mt-1">
-          Here&apos;s what&apos;s happening with your reviews — {formatTodayDate()}
+          {formatTodayDate()}
         </p>
       </div>
 
