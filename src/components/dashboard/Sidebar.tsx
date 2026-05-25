@@ -11,6 +11,7 @@ import {
   Settings,
   CreditCard,
   LogOut,
+  Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +45,7 @@ const navGroups: NavGroup[] = [
   {
     label: "Account",
     items: [
+      { label: "Agency", href: "/dashboard/agency", icon: Building2 },
       { label: "Settings", href: "/dashboard/settings", icon: Settings },
       { label: "Billing", href: "/dashboard/billing", icon: CreditCard },
     ],
